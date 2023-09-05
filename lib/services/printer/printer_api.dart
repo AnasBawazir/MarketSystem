@@ -85,7 +85,7 @@ class PrintApi {
             width: PosTextSize.size2,
           )),
       PosColumn(
-          text: "${total_receipt_price} LL",
+          text: "${total_receipt_price} SAR",
           width: 8,
           styles: PosStyles(
               align: PosAlign.right, bold: true, height: PosTextSize.size2)),
@@ -101,7 +101,7 @@ class PrintApi {
             width: PosTextSize.size1,
           )),
       PosColumn(
-          text: "$cash LL",
+          text: "$cash SAR",
           width: 8,
           styles: PosStyles(
             align: PosAlign.right,
@@ -121,7 +121,7 @@ class PrintApi {
             width: PosTextSize.size1,
           )),
       PosColumn(
-          text: "$change LL",
+          text: "$change SAR",
           width: 8,
           styles: PosStyles(
             align: PosAlign.right,

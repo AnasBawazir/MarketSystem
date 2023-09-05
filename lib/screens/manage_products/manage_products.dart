@@ -8,6 +8,10 @@ import 'package:marketsystem/shared/constant.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../controllers/layout_controller.dart';
+import '../../layout/SearchFieldWidget.dart';
+import '../../shared/styles.dart';
+
 class ManageProductsScreen extends StatelessWidget {
   List<String> headertitles = [
     'Name',
@@ -16,10 +20,34 @@ class ManageProductsScreen extends StatelessWidget {
     'Qty',
     'Edit'
   ];
-
   @override
   Widget build(BuildContext context) {
+    var controller = Provider.of<LayoutController>(context);
     return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: myLinearGradient,
+          ),
+        ),
+        title: controller.issearchingInProducts
+            ? SearchFieldWidget(
+          context,
+          'search in products...',
+        )
+            : Text(
+          "Product Management",
+        ),
+        actions: controller.issearchingInProducts == false
+            ? [
+          IconButton(
+              onPressed: () {
+                controller.onChangeSearchInProductsStatus(true);
+              },
+              icon: Icon(Icons.search)),
+        ]
+            : [],
+      ),
       body: Consumer<ProductsController>(builder: (context, controller, child) {
         print('manageScreen');
         return controller.isloadingGetProducts

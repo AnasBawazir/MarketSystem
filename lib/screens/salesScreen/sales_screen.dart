@@ -61,216 +61,221 @@ class _SellScreenState extends State<SalesScreen> {
   Widget build(BuildContext context) {
     var prod_controller = Provider.of<ProductsController>(context);
 
-    return Scaffold(
-      body: prod_controller.isloadingGetProducts
-          ? Center(child: CircularProgressIndicator())
-          : _iscashSuccess
-              ? Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: double.infinity,
-                    color: defaultColor.shade300,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return GestureDetector(
+        onTap: () =>FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: prod_controller.isloadingGetProducts
+            ? Center(child: CircularProgressIndicator())
+            : _iscashSuccess
+            ? Align(
+          alignment: Alignment.center,
+          child: Container(
+            width: double.infinity,
+            color: defaultColor.shade300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Text(
-                                  "${_received_cash}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 30),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Received",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 25),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Column(
-                              children: [
-                                Text(
-                                  "${_total_paid}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 25),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Total paid",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                              ],
-                            )),
-                            Container(
-                                height: 80,
-                                child: VerticalDivider(
-                                  color: Colors.white,
-                                  thickness: 2,
-                                )),
-                            Expanded(
-                                child: Column(
-                              children: [
-                                Text(
-                                  "${_change_amount}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red.shade400,
-                                      fontSize: 25),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Change",
-                                  style: TextStyle(
-                                      color: Colors.red.shade400, fontSize: 15),
-                                ),
-                              ],
-                            ))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          child: Icon(
-                            Icons.done,
-                            size: 50,
-                            color: defaultColor,
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text("Completed!",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
                         Text(
-                          "Transaction was Completed successfully",
-                          style: TextStyle(color: Colors.white),
+                          "${_received_cash}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 30),
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 10,
                         ),
-                        _continueButton(),
+                        Text(
+                          "Received",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 25),
+                        ),
                       ],
                     ),
-                  ),
-                )
-              : Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    if (is_onScan) _buildQr(context),
-                    // Positioned(
-                    //   bottom: 10,
-                    //   child: _buildResult(),
-                    // ),
-                    if (is_onScan)
-                      Positioned(
-                        top: 10,
-                        child: _buildControlButton(),
-                      ),
-                    if (!is_onScan)
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0, vertical: 5),
-                                child: Row(
-                                  children: [
-                                    Expanded(child: _builddropdownSearch()),
-                                    IconButton(
-                                        onPressed: () {
-                                          qrViewcontroller?.resumeCamera();
-                                          setState(() {
-                                            is_onScan = true;
-                                          });
-                                        },
-                                        icon:
-                                            Icon(Icons.qr_code_scanner_rounded))
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: prod_controller
-                                                  .basket_products.length >
-                                              0
-                                          ? Column(
-                                              children: [
-                                                _build_basket_header(),
-                                                Divider(
-                                                  thickness: 2,
-                                                  color: defaultColor,
-                                                ),
-                                                Expanded(
-                                                  child: ListView(
-                                                    children: [
-                                                      ...prod_controller
-                                                          .basket_products
-                                                          .map((e) =>
-                                                              _basket_item(e)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Container()),
-                                ),
-                              ),
-                              _buildTotalPrice(prod_controller),
-                              Container(
-                                height: 10,
-                                color: Colors.white,
-                              ),
-                              _buildSubmitRow(prod_controller),
-                            ],
-                          ),
-                        ),
-                      ),
-                    // DataTable(
-                    //   headingTextStyle: TextStyle(color: defaultColor),
-                    //   border: TableBorder.all(width: 1, color: Colors.grey),
-                    //   columns: [
-                    //     ...headertitles.map((e) => _build_header_item(e))
-                    //   ],
-                    //   rows: [
-                    //     ...prod_controller.list_ofProduct_inStore.map(
-                    //         (e) =>
-                    //             _build_Row(e, marketController, context)),
-                    //   ],
-                    // ),
                   ],
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "${_total_paid}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 25),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Total paid",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 15),
+                            ),
+                          ],
+                        )),
+                    Container(
+                        height: 80,
+                        child: VerticalDivider(
+                          color: Colors.white,
+                          thickness: 2,
+                        )),
+                    Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "${_change_amount}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red.shade400,
+                                  fontSize: 25),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Change",
+                              style: TextStyle(
+                                  color: Colors.red.shade400, fontSize: 15),
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 50,
+                  child: Icon(
+                    Icons.done,
+                    size: 50,
+                    color: defaultColor,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text("Completed!",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                Text(
+                  "Transaction was Completed successfully",
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                _continueButton(),
+              ],
+            ),
+          ),
+        )
+            : Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            if (is_onScan) _buildQr(context),
+            // Positioned(
+            //   bottom: 10,
+            //   child: _buildResult(),
+            // ),
+            if (is_onScan)
+              Positioned(
+                top: 10,
+                child: _buildControlButton(),
+              ),
+            if (!is_onScan)
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 5),
+                        child: Row(
+                          children: [
+                            Expanded(child: _builddropdownSearch()),
+                            IconButton(
+                                onPressed: () {
+                                  qrViewcontroller?.resumeCamera();
+                                  setState(() {
+                                    is_onScan = true;
+                                  });
+                                },
+                                icon:
+                                Icon(Icons.qr_code_scanner_rounded))
+                          ],
+                        ),
+                      ),
+
+                      //Product list
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: prod_controller
+                                  .basket_products.length >
+                                  0
+                                  ? Column(
+                                children: [
+                                  _build_basket_header(),
+                                  Divider(
+                                    thickness: 2,
+                                    color: defaultColor,
+                                  ),
+                                  Expanded(
+                                    child: ListView(
+                                      children: [
+                                        ...prod_controller
+                                            .basket_products
+                                            .map((e) =>
+                                            _basket_item(e)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                                  : Container()),
+                        ),
+                      ),
+                      _buildTotalPrice(prod_controller),
+                      Container(
+                        height: 10,
+                        color: Colors.white,
+                      ),
+                      _buildSubmitRow(prod_controller),
+                    ],
+                  ),
+                ),
+              ),
+            // DataTable(
+            //   headingTextStyle: TextStyle(color: defaultColor),
+            //   border: TableBorder.all(width: 1, color: Colors.grey),
+            //   columns: [
+            //     ...headertitles.map((e) => _build_header_item(e))
+            //   ],
+            //   rows: [
+            //     ...prod_controller.list_ofProduct_inStore.map(
+            //         (e) =>
+            //             _build_Row(e, marketController, context)),
+            //   ],
+            // ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -424,7 +429,7 @@ class _SellScreenState extends State<SalesScreen> {
               width: 10,
             ),
             Text(
-              controller.totalprice.toString() + " LL",
+              controller.totalprice.toString() + " SAR",
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(
@@ -465,56 +470,58 @@ class _SellScreenState extends State<SalesScreen> {
         ),
       );
 
-  _builddropdownSearch() => Form(
-        key: _formkey,
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                Container(
-                  height: 50,
-                  child: TypeAheadField(
-                    hideOnError: true,
-                    textFieldConfiguration: TextFieldConfiguration(
-                        enableSuggestions: false,
-                        controller: text_productNameController,
-                        style: TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                            border: UnderlineInputBorder(),
-                            hintText: "Select Product ...")),
-                    // suggestionsCallback: (pattern) async {
-                    // return await marketController
-                    //     .autocomplete_Search_forProduct(pattern);
-                    // },
-                    itemBuilder: (context, suggestion) {
-                      return ListTile(
-                        //leading: Icon(Icons.shopping_cart),
-                        title:
-                            Text((suggestion as ProductModel).name.toString()),
-                        subtitle: Text('${suggestion.price.toString()} LL'),
-                      );
-                    },
-                    onSuggestionSelected: (Object? suggestion) async {
-                      String? barcode =
-                          (suggestion as ProductModel).barcode.toString();
-                      await context
-                          .read<ProductsController>()
-                          .fetchProductBybarCode(barcode);
-                      text_productNameController.clear();
-                    },
-                    suggestionsCallback: (String pattern) async {
-                      return await context
-                          .read<ProductsController>()
-                          .autocomplete_Search_forProduct(pattern);
-                    },
-                  ),
+  _builddropdownSearch() => SingleChildScrollView(
+    child: Form(
+      key: _formkey,
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Container(
+                height: 50,
+                child: TypeAheadField(
+                  hideOnError: true,
+                  textFieldConfiguration: TextFieldConfiguration(
+                      enableSuggestions: false,
+                      controller: text_productNameController,
+                      style: TextStyle(fontSize: 20),
+                      decoration: InputDecoration(
+                          border: UnderlineInputBorder(),
+                          hintText: "Select Product ...")),
+                  // suggestionsCallback: (pattern) async {
+                  // return await marketController
+                  //     .autocomplete_Search_forProduct(pattern);
+                  // },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      //leading: Icon(Icons.shopping_cart),
+                      title:
+                      Text((suggestion as ProductModel).name.toString()),
+                      subtitle: Text('${suggestion.price.toString()} SAR'),
+                    );
+                  },
+                  onSuggestionSelected: (Object? suggestion) async {
+                    String? barcode =
+                    (suggestion as ProductModel).barcode.toString();
+                    await context
+                        .read<ProductsController>()
+                        .fetchProductBybarCode(barcode);
+                    text_productNameController.clear();
+                  },
+                  suggestionsCallback: (String pattern) async {
+                    return await context
+                        .read<ProductsController>()
+                        .autocomplete_Search_forProduct(pattern);
+                  },
                 ),
-              ],
-            ),
-          ],
-        ),
-      );
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
 
   _basket_item(ProductModel model) {
     return Row(
@@ -533,7 +540,7 @@ class _SellScreenState extends State<SalesScreen> {
                 height: 4,
               ),
               Text(
-                model.price.toString() + " LL ",
+                model.price.toString() + " SAR ",
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
             ],

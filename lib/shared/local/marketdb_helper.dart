@@ -96,6 +96,106 @@ class MarketDbHelper extends ChangeNotifier {
                   "Create Table detailsfacture(id INTEGER PRIMARY KEY AUTOINCREMENT ,barcode TEXT ,name TEXT,qty INTEGER,price INTEGER,profit_per_item_on_sale INTEGER, facture_id INTEGER)")
               .then((value) => print('detailsfactures table created'))
               .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Users(
+      id integer primary key autoincrement not null,
+      code text,
+      name text,
+      password text,
+      date not null default current_timestamp
+    )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Depts(
+      id integer primary key autoincrement not null,
+      name text,
+      alias text
+          )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Units(
+      id integer primary key autoincrement not null,
+      name text,
+      alias text,
+      eq integer
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute('''create table Items(
+      id integer primary key autoincrement not null,
+      parentId integer,
+      code text,
+      desc text,
+      desc2 text,
+      price real,
+      cost real,
+      deptId integer,
+      unitId integer,
+      taxable text
+      )
+    ''')
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Alias(
+      id integer primary key autoincrement not null,
+      itemId integer,
+      alias text
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Customer(
+      id integer primary key autoincrement not null,
+      name text,
+      address text,
+      VATNo text,
+      phone text,
+      notes text
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Tenders(
+      id integer primary key autoincrement not null,
+      name text
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table Trans(
+      id integer primary key autoincrement not null,
+      name text
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
+
+          db
+              .execute("""create table TransEntries(
+      id integer primary key autoincrement not null,
+      name text
+      )
+    """)
+              .then((value) => print('Users table created'))
+              .catchError((onError) => print(onError.toString()));
         },
         onOpen: (database) {
           print('database opened');

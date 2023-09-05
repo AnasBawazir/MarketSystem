@@ -12,6 +12,7 @@ import 'package:marketsystem/shared/styles.dart';
 import 'package:marketsystem/shared/toast_message.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
+import '../../generated/l10n.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       _connectPrinter_IfAvailable();
       _load_products().then((value) {
         print('getting products');
@@ -98,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 10,
                   ),
                   Text(
-                    "Pos System",
+                    S.of(context)?.home ?? 'hihi',
                     style: TextStyle(
                         color: Colors.white, letterSpacing: 1, fontSize: 30),
                   ),

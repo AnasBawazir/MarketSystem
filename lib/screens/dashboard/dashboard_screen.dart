@@ -43,7 +43,7 @@ class DashBoardScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: SingleChildScrollView(
+        body: Expanded(child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -90,30 +90,30 @@ class DashBoardScreen extends StatelessWidget {
               //NOTE daily Sales diagram
               Consumer<FactureController>(
                   builder: (context, controller, child) {
-                return SfCartesianChart(
-                    enableSideBySideSeriesPlacement: false,
-                    primaryXAxis: CategoryAxis(
-                      title: AxisTitle(
-                          text: "Day", alignment: ChartAlignment.center),
-                    ),
-                    primaryYAxis: NumericAxis(
-                        isVisible:
+                    return SfCartesianChart(
+                        enableSideBySideSeriesPlacement: false,
+                        primaryXAxis: CategoryAxis(
+                          title: AxisTitle(
+                              text: "Day", alignment: ChartAlignment.center),
+                        ),
+                        primaryYAxis: NumericAxis(
+                            isVisible:
                             controller.isHasDailySalesInMonth ? false : true,
-                        title: AxisTitle(
-                            text: "Money", alignment: ChartAlignment.center),
-                        axisLine: const AxisLine(width: 0),
-                        labelFormat: '{value} LL',
-                        majorTickLines: const MajorTickLines(size: 0)),
-                    // Chart title
-                    // title: ChartTitle(
-                    //   text: 'Daily Sales',
-                    // ),
-                    // disable legend
-                    legend: Legend(isVisible: false),
-                    // Enable tooltip
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    series: _getDailysalesInMonthColumnSeries(context));
-              }),
+                            title: AxisTitle(
+                                text: "Money", alignment: ChartAlignment.center),
+                            axisLine: const AxisLine(width: 0),
+                            labelFormat: '{value} SAR',
+                            majorTickLines: const MajorTickLines(size: 0)),
+                        // Chart title
+                        // title: ChartTitle(
+                        //   text: 'Daily Sales',
+                        // ),
+                        // disable legend
+                        legend: Legend(isVisible: false),
+                        // Enable tooltip
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        series: _getDailysalesInMonthColumnSeries(context));
+                  }),
               Container(
                 color: Colors.amberAccent,
                 height: 30,
@@ -134,25 +134,25 @@ class DashBoardScreen extends StatelessWidget {
               //NOTE best selling diagram
               Consumer<FactureController>(
                   builder: (context, controller, child) {
-                return SfCartesianChart(
-                  plotAreaBorderWidth: 0,
-                  // title: ChartTitle(text: 'Best Selling'),
-                  primaryXAxis: CategoryAxis(
-                      title: AxisTitle(
-                          text: "Products", alignment: ChartAlignment.center),
-                      majorGridLines: const MajorGridLines(width: 0),
-                      labelIntersectAction: AxisLabelIntersectAction.rotate45),
-                  primaryYAxis: NumericAxis(
-                      title: AxisTitle(
-                          text: "Qty", alignment: ChartAlignment.center),
-                      axisLine: const AxisLine(width: 0),
-                      //labelFormat: '{value}',
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: _getBestSellingColumnSeries(context),
-                  tooltipBehavior: TooltipBehavior(
-                      enable: true, header: '', canShowMarker: false),
-                );
-              }),
+                    return SfCartesianChart(
+                      plotAreaBorderWidth: 0,
+                      // title: ChartTitle(text: 'Best Selling'),
+                      primaryXAxis: CategoryAxis(
+                          title: AxisTitle(
+                              text: "Products", alignment: ChartAlignment.center),
+                          majorGridLines: const MajorGridLines(width: 0),
+                          labelIntersectAction: AxisLabelIntersectAction.rotate45),
+                      primaryYAxis: NumericAxis(
+                          title: AxisTitle(
+                              text: "Qty", alignment: ChartAlignment.center),
+                          axisLine: const AxisLine(width: 0),
+                          //labelFormat: '{value}',
+                          majorTickLines: const MajorTickLines(size: 0)),
+                      series: _getBestSellingColumnSeries(context),
+                      tooltipBehavior: TooltipBehavior(
+                          enable: true, header: '', canShowMarker: false),
+                    );
+                  }),
               Container(
                 color: Colors.amberAccent,
                 height: 30,
@@ -172,31 +172,31 @@ class DashBoardScreen extends StatelessWidget {
               ),
               Consumer<FactureController>(
                   builder: (context, controller, child) {
-                return SfCartesianChart(
-                  plotAreaBorderWidth: 0,
-                  // title: ChartTitle(text: 'Best Selling'),
-                  primaryXAxis: CategoryAxis(
-                      title: AxisTitle(
-                          text: "Products", alignment: ChartAlignment.center),
-                      majorGridLines: const MajorGridLines(width: 0),
-                      labelIntersectAction: AxisLabelIntersectAction.rotate45),
-                  primaryYAxis: NumericAxis(
-                      title: AxisTitle(
-                          text: "Money", alignment: ChartAlignment.center),
-                      isVisible: controller.list_of_BestSelling.length == 0
-                          ? true
-                          : false,
-                      axisLine: const AxisLine(width: 0),
-                      labelFormat: '{value} LL ',
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: _getMostProfitableColumnSeries(context),
-                  tooltipBehavior: TooltipBehavior(
-                      enable: true, header: '', canShowMarker: false),
-                );
-              }),
+                    return SfCartesianChart(
+                      plotAreaBorderWidth: 0,
+                      // title: ChartTitle(text: 'Best Selling'),
+                      primaryXAxis: CategoryAxis(
+                          title: AxisTitle(
+                              text: "Products", alignment: ChartAlignment.center),
+                          majorGridLines: const MajorGridLines(width: 0),
+                          labelIntersectAction: AxisLabelIntersectAction.rotate45),
+                      primaryYAxis: NumericAxis(
+                          title: AxisTitle(
+                              text: "Money", alignment: ChartAlignment.center),
+                          isVisible: controller.list_of_BestSelling.length == 0
+                              ? true
+                              : false,
+                          axisLine: const AxisLine(width: 0),
+                          labelFormat: '{value} SAR ',
+                          majorTickLines: const MajorTickLines(size: 0)),
+                      series: _getMostProfitableColumnSeries(context),
+                      tooltipBehavior: TooltipBehavior(
+                          enable: true, header: '', canShowMarker: false),
+                    );
+                  }),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

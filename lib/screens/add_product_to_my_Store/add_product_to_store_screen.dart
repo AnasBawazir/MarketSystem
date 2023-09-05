@@ -59,7 +59,7 @@ class _AddProductToMyStoreScreenState extends State<AddProductToMyStoreScreen> {
                           leading: Icon(Icons.shopping_cart),
                           title: Text(
                               (suggestion as ProductModel).name.toString()),
-                          subtitle: Text('${suggestion.price.toString()} LL'),
+                          subtitle: Text('${suggestion.price.toString()} SAR'),
                         );
                       },
                       onSuggestionSelected: (Object? suggestion) {

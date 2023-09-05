@@ -5,7 +5,7 @@ import 'package:marketsystem/screens/salesScreen/sales_screen.dart';
 
 class LayoutController extends ChangeNotifier {
   List<BottomNavigationBarItem> bottomItems = [
-    BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Products"),
+   /* BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Products"),*/
     // BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add Product"),
     BottomNavigationBarItem(
         icon: Icon(Icons.production_quantity_limits), label: "Sales"),
@@ -13,11 +13,11 @@ class LayoutController extends ChangeNotifier {
   ];
 
   //NOTE: ---------------------------Screens and Titles----------------------------
-  final screens = [ManageProductsScreen(), SalesScreen()]; // ReportsScreen()
+  final screens = [/*ManageProductsScreen(),*/ SalesScreen()]; // ReportsScreen()
 
   final appbar_title = [
-    'Manage Products',
-    'Sales', /*'Report'*/
+    'Sales','Manage Products',
+     /*'Report'*/
   ];
 
   // NOTE: --------------------- On Change Index Of Screens ------------------
